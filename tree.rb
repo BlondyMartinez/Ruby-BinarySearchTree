@@ -84,6 +84,50 @@ class Tree
 
         nil
     end
+
+    def level_order
+        return [] if @root.nil?
+      
+        result = []
+        queue = [@root]
+      
+        until queue.empty?
+          current_node = queue.shift
+          yield current_node if block_given?
+          result << current_node.data
+      
+          queue << current_node.left if current_node.left
+          queue << current_node.right if current_node.right
+        end
+      
+        result
+    end
+
+    def inorder(node = @root, &block)
+        return if node.nil?
+        
+        inorder(node.left, &block)
+        block.call(node) if block_given? 
+        inorder(node.right, &block)
+      end
+    
+      
+      def preorder(node = @root, &block)
+        return if node.nil?
+        
+        block.call(node) if block_given?  
+        preorder(node.left, &block)
+        preorder(node.right, &block)
+      end
+    
+      def postorder(node = @root, &block)
+        return if node.nil?
+        
+        postorder(node.left, &block)
+        postorder(node.right, &block)
+        block.call(node) if block_given? 
+      end
+    
 end
 
 arr = [4, 2, 6, 1, 3, 5, 7, 7]
