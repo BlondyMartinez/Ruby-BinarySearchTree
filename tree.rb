@@ -127,9 +127,33 @@ class Tree
         postorder(node.right, &block)
         block.call(node) if block_given? 
       end
-    
-end
 
-arr = [4, 2, 6, 1, 3, 5, 7, 7]
-binary_tree = Tree.new(arr)
-binary_tree.pretty_print(binary_tree.root)
+      def height(node, height = 0)
+        return 0 if node.nil?
+
+        left_height = height(node.left, height + 1)
+        right_height = height (node.right, height + 1)
+
+        return [left_height, right_height].max
+    end
+
+    def depth(node)
+        return 0 if node.nil? || node.parent.nil? 
+        return 1 + depth(node.parent)           
+    end
+
+    def balanced?(node = @root)
+        return nil if node.nil?
+
+        left_height = height(node.left)
+        right_height = height(node.right)
+
+        return (left_height - right_height).abs <= 1 && balanced?(node.left) && balanced?(node.right)
+    end
+
+    def rebalance
+        nodes = inorder_traversal
+
+        root = build_balanced_tree(nodes)
+    end
+end
