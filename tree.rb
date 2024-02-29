@@ -71,6 +71,19 @@ class Tree
     
         node
     end
+
+    def find(value, node = @root)
+        return nil if node.nil?
+        return node if node.data == value
+
+        result = find(value, node.right)
+        return result unless result.nil?
+
+        result = find(value, node.left)
+        return result unless result.nil?
+
+        nil
+    end
 end
 
 arr = [4, 2, 6, 1, 3, 5, 7, 7]
