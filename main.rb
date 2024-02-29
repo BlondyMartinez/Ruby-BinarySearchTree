@@ -1,39 +1,35 @@
 require_relative 'tree'
 
-# Test tree construction
-arr = [4, 2, 6, 1, 3, 5, 7, 7]
-binary_tree = Tree.new(arr)
-puts "Binary Tree Construction Test:"
-binary_tree.pretty_print
+random_numbers = Array.new(15) { rand(1..100) }
+tree = Tree.new(random_numbers)
 
-# Test insertion
-puts "\nInsertion Test:"
-binary_tree.insert(8)
-binary_tree.pretty_print
+puts "Is the tree balanced? #{tree.balanced?}"
 
-# Test deletion
-puts "\nDeletion Test:"
-binary_tree.delete(8)
-binary_tree.pretty_print
+puts "\nLevel Order Traversal:"
+tree.level_order { |node| print "#{node.data} " }
+puts "\n\nPreorder Traversal:"
+tree.preorder { |node| print "#{node.data} " }
+puts "\n\nPostorder Traversal:"
+tree.postorder { |node| print "#{node.data} " }
+puts "\n\nInorder Traversal:"
+tree.inorder { |node| print "#{node.data} " }
 
-# Test level order traversal
-puts "\nLevel Order Traversal Test:"
-binary_tree.level_order { |node| puts node.data }
+tree.insert(110)
+tree.insert(120)
+tree.insert(130)
 
-# Test inorder traversal
-puts "\nInorder Traversal Test:"
-binary_tree.inorder { |node| puts node.data }
+puts "\n\nIs the tree unbalanced? #{tree.balanced?}"
 
-# Test preorder traversal
-puts "\nPreorder Traversal Test:"
-binary_tree.preorder { |node| puts node.data }
+tree.rebalance
 
-# Test postorder traversal
-puts "\nPostorder Traversal Test:"
-binary_tree.postorder { |node| puts node.data }
+puts "\nIs the tree balanced after rebalancing? #{tree.balanced?}"
 
-# Test search
-puts "\nSearch Test:"
-result = binary_tree.find(6)
-raise "Node not found" if result.nil?
-puts "Node found: #{result.data}"
+puts "\nLevel Order Traversal after rebalancing:"
+tree.pretty_print
+
+puts "\n\nPreorder Traversal after rebalancing:"
+tree.preorder { |node| print "#{node.data} " }
+puts "\n\nPostorder Traversal after rebalancing:"
+tree.postorder { |node| print "#{node.data} " }
+puts "\n\nInorder Traversal after rebalancing:"
+tree.inorder { |node| print "#{node.data} " }

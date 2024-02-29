@@ -109,30 +109,30 @@ class Tree
         inorder(node.left, &block)
         block.call(node) if block_given? 
         inorder(node.right, &block)
-      end
+    end
     
       
-      def preorder(node = @root, &block)
+    def preorder(node = @root, &block)
         return if node.nil?
         
         block.call(node) if block_given?  
         preorder(node.left, &block)
         preorder(node.right, &block)
-      end
+    end
     
-      def postorder(node = @root, &block)
+    def postorder(node = @root, &block)
         return if node.nil?
         
         postorder(node.left, &block)
         postorder(node.right, &block)
         block.call(node) if block_given? 
-      end
+    end
 
-      def height(node, height = 0)
+    def height(node, height = 0)
         return 0 if node.nil?
 
         left_height = height(node.left, height + 1)
-        right_height = height (node.right, height + 1)
+        right_height = height(node.right, height + 1)
 
         return [left_height, right_height].max
     end
@@ -152,8 +152,9 @@ class Tree
     end
 
     def rebalance
-        nodes = inorder_traversal
+        nodes = [] 
+        inorder { |node| nodes << node }
 
-        root = build_balanced_tree(nodes)
+        root = build_tree(nodes)
     end
 end
